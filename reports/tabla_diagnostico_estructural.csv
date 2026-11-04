@@ -1,0 +1,7 @@
+Dataset,Filas,Columnas,Tipos de datos,% celdas nulas,Observaciones
+so_2022,73268,79,"str: 73, float64: 5, int64: 1",28.4,YearsCode/YearsCodePro como texto; tecnologías y DevType en selección múltiple con ';'; salario con extremos (1 a 50 M USD); 2 columnas VCHosting 100 % vacías.
+so_2023,89184,84,"str: 80, float64: 3, int64: 1",33.6,Misma estructura que 2022; YearsCodePro sigue como texto; salario máximo de ~74 M USD.
+so_2024,65437,114,"str: 100, float64: 13, int64: 1",38.8,Salario con la mayor proporción de nulos; Currency con dos formatos; cambios de nombre en frameworks.
+so_2025,49191,172,"str: 119, float64: 52, int64: 1",52.4,Sin YearsCodePro (solo WorkExp); Employment sin distinguir tiempo completo; más nulos en tecnologías y país.
+pib_owid,7445,5,"str: 3, int64: 1, float64: 1",1.3,Formato largo país-año sin nulos en el PIB; incluye agregados (owid_region nula); USD PPA constantes 2021.
+pib_bm,266,71,"float64: 67, str: 4",48.0,Formato ancho (un año por columna); columna vacía 'Unnamed: 70'; incluye agregados; USD PPA corrientes.
