@@ -2,3 +2,7 @@
 __pycache__/
 .ipynb_checkpoints/
 data/*.csv
+
+# Datasets descargados (pesan >100 MB): se obtienen con scripts/descargar_datos.py
+data/raw/*
+!data/raw/.gitkeep
