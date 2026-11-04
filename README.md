@@ -79,6 +79,8 @@ Requisitos: **Python 3.12 o superior** y **Git**. Se necesitan unos 600 MB libre
    python -m pip install -r requirements.txt
    ```
 
+   `requirements.txt` se generó con `pip freeze` en Windows. La única dependencia exclusiva de ese sistema, `pywinpty`, tiene el marcador `; sys_platform == "win32"`, así que el mismo archivo funciona también en macOS y Linux.
+
 4. Descargar los datos (unos 570 MB; el script omite los archivos que ya existan):
 
    ```bash

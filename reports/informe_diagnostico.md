@@ -158,6 +158,53 @@ Entre 28 y 30 países por año no coinciden con los nombres de OWID, y esos paí
 
 ## 5. Principales hallazgos de calidad por dataset
 
+### 5.1 Resumen por dataset
+
+**Dataset 1 – `so_2022` (Encuesta Stack Overflow 2022)**
+- Salario (`ConvertedCompYearly`) nulo en 48,0 %, y en 26,6 % de la población de interés. Tiene los extremos más fuertes: percentil 99 de 2,16 M USD y 865 respuestas por encima de 1 M USD.
+- `YearsCodePro` y `YearsCode` vienen como texto (`Less than 1 year`: 1.972; `More than 50 years`: 41 en `YearsCodePro`).
+- `DevType` es de selección múltiple (60,8 % con varias opciones), a diferencia de los años siguientes.
+- Dos columnas 100 % vacías: `VCHostingPersonal use` y `VCHostingProfessional use`.
+- Nombres de tecnologías propios de este año: `ASP.NET Core ` (con espacio final), `React.js`, `Angular.js`, `Bash/Shell`.
+- **Estado:** utilizable. Es el año con más población completa (31.647 casos con salario y lenguajes), después de convertir la experiencia a número y recortar atípicos.
+
+**Dataset 2 – `so_2023` (Encuesta Stack Overflow 2023)**
+- Salario nulo en 46,2 %, y en 26,2 % de la población. Tiene el máximo absoluto de los cuatro años: 74.351.432 USD.
+- `YearsCodePro` sigue como texto (1.836 y 83 etiquetas no numéricas).
+- Cambian las etiquetas de `RemoteWork` (`Remote` / `In-person`) y de algunas tecnologías (`ASP.NET CORE`, `React`, `AngularJS`).
+- 691 casos con más años profesionales que años programando.
+- **Estado:** utilizable. Tiene la población más grande (39.529 casos con salario y lenguajes).
+
+**Dataset 3 – `so_2024` (Encuesta Stack Overflow 2024)**
+- Es el año con más salario faltante: 64,2 % del total y 52,8 % de la población. 10.305 montos de `CompTotal` no se convirtieron a USD, y `CompTotal` llega a 1×10¹⁵⁰.
+- `Country` nulo en 9,9 %, frente a menos de 2,1 % en 2022–2023.
+- `Currency` mezcla formatos con tabulador y con espacio.
+- **Estado:** utilizable con precaución. Queda con 18.785 casos, menos de la mitad que 2023; hay que reportar el tamaño de muestra.
+
+**Dataset 4 – `so_2025` (Encuesta Stack Overflow 2025)**
+- No existe `YearsCodePro`; la experiencia queda solo en `WorkExp`, con 147 casos de más de 50 años y un máximo de 100.
+- `Employment` no distingue tiempo completo (`Employed`).
+- Más nulos en lenguajes (35,6 %), frameworks (53,3 %) y país (28,0 %).
+- `RemoteWork` tiene cinco opciones nuevas y `Age` ya no incluye `Under 18 years old`.
+- **Estado:** utilizable como aproximación, con 15.787 casos con salario y lenguajes. La población no es exactamente comparable con la de los años anteriores y debe declararse como limitación.
+
+**Dataset 5 – `pib_owid` (PIB per cápita, Our World in Data)**
+- Es el dataset más limpio: formato largo, tipos correctos, sin nulos en el PIB y sin pares país-año repetidos.
+- Incluye 13 agregados (`World`, regiones del BM, niveles de ingreso), identificables por `owid_region` nula.
+- La cobertura baja en 2025: 198 entidades con dato frente a 212 en 2022.
+- Los nombres de país no coinciden con la encuesta en ~30 casos (p. ej. `United States` frente a `United States of America`).
+- **Estado:** listo para usar como fuente principal de PIB, después de filtrar los agregados y construir la tabla de equivalencias de países.
+
+**Dataset 6 – `pib_bm` (PIB per cápita PPA, Banco Mundial)**
+- Formato ancho, con un año por columna; necesita `melt`.
+- La columna `Unnamed: 70` está vacía, y `Indicator Name` e `Indicator Code` son constantes.
+- 68 de 266 entidades no son países de OWID (agregados y territorios).
+- 33 entidades sin dato en 2025.
+- La unidad (USD corrientes) es distinta de la de OWID: entre 11 % y 16 % mayor en 2023.
+- **Estado:** requiere más transformación que OWID. Se usará solo como fuente de contraste.
+
+### 5.2 Tabla de hallazgos
+
 | Dataset | Problema identificado | Evidencia encontrada | Posible impacto | Acción propuesta |
 |---|---|---|---|---|
 | Encuestas 2022–2025 | Valores faltantes en el salario (variable objetivo) | `ConvertedCompYearly` nulo: 48,0 % (2022), 46,2 %, 64,2 %, 51,3 % (2025); 52,8 % en la población de interés de 2024 | Menos casos por tecnología; 2024 queda con menos representación | Filtrar la población de interés y excluir filas sin salario; no imputar la variable objetivo |
@@ -172,6 +219,7 @@ Entre 28 y 30 países por año no coinciden con los nombres de OWID, y esos paí
 | Encuestas vs. PIB | Nombres de país no coinciden | ~30 países sin coincidencia con OWID (p. ej. `United States of America`, `United Kingdom of Great Britain and Northern Ireland`, `Russian Federation`) | Al unir se perdería cerca del 30 % de las respuestas | Crear una tabla de equivalencias de países o unir por código ISO3; excluir `Nomadic` |
 | `so_2022` | Columnas completamente vacías | `VCHostingPersonal use` y `VCHostingProfessional use`: 73.268 nulos de 73.268 filas (100 %) | No aportan información y ocupan memoria | Eliminarlas con `drop(columns=...)` |
 | `pib_bm` | Formato ancho y columnas sin información | Un año por columna (texto); `Unnamed: 70` vacía; `Indicator Name` e `Indicator Code` constantes | No se puede unir por año directamente | Eliminar columnas vacías y constantes; pasar a formato largo con `melt` y convertir el año a `int` |
+| `pib_owid` | Agregados mezclados con países y menor cobertura reciente | 13 entidades sin `owid_region` (`World`, regiones, niveles de ingreso); 198 entidades con dato en 2025 vs. 212 en 2022 | Se podrían unir agregados como si fueran países; algunos países quedarían sin PIB en 2025 | Filtrar `owid_region` no nula; para 2025 usar el último año disponible por país |
 | `pib_bm` / `pib_owid` | Agregados mezclados con países y unidades distintas | `pib_bm`: 68 entidades que no son países de OWID; OWID usa USD PPA constantes de 2021 y BM USD PPA corrientes | Se podrían unir regiones como si fueran países, o mezclar unidades | Filtrar solo países; usar una sola fuente (OWID) como principal y BM como contraste |
 | `pib_bm` | PIB 2025 incompleto | 33 entidades sin dato en 2025 (vs. 19 en 2022) | Algunos países no tendrían contexto económico en 2025 | Usar el último año disponible por país y documentarlo |
 
