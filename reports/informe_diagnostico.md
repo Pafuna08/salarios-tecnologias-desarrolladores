@@ -1,7 +1,8 @@
 # Informe técnico: diagnóstico inicial de calidad de datos
 
 **Actividad:** GA1-220501094-01-AA1-EV06 – Diagnosticar la calidad de datos: preparación, exploración y documentación
-**Autor:** Pablo
+**Aprendiz:** Pablo Enrique Fuenmayor Osuna
+**Institución:** Servicio Nacional de Aprendizaje (SENA)
 **Fecha:** 3 de noviembre de 2026
 **Herramientas:** Python 3.14, pandas 3.1, JupyterLab 4.6
 **Cuaderno de respaldo:** [`notebooks/diagnostico_calidad.ipynb`](../notebooks/diagnostico_calidad.ipynb)

@@ -2,6 +2,8 @@
 
 Proyecto individual de ciencia de datos con Python y pandas.
 
+**Aprendiz:** Pablo Enrique Fuenmayor Osuna · Servicio Nacional de Aprendizaje (SENA)
+
 **Actividad actual:** GA1-220501094-01-AA1-EV06 – Diagnosticar la calidad de datos: preparación, exploración y documentación.
 
 ## Descripción y propósito
