@@ -5,8 +5,8 @@ Los archivos de la encuesta de Stack Overflow pesan más de 100 MB cada uno
 las fuentes oficiales. Solo usa la biblioteca estándar de Python.
 
 Uso (desde la raíz del proyecto, con el entorno activo):
-    python scripts/descargar_datos.py            # descarga lo que falte
-    python scripts/descargar_datos.py --forzar   # vuelve a descargar todo
+    python scripts/download_data.py            # descarga lo que falte
+    python scripts/download_data.py --forzar   # vuelve a descargar todo
 """
 
 import argparse
@@ -28,7 +28,7 @@ ARCHIVOS = {}
 for anio in ANIOS:
     ARCHIVOS[f"so_survey_{anio}.csv"] = f"{SO_BASE}/{anio}/results.csv"
     ARCHIVOS[f"so_schema_{anio}.csv"] = f"{SO_BASE}/{anio}/schema.csv"
-ARCHIVOS["pib_per_capita_owid.csv"] = (
+ARCHIVOS["gdp_per_capita_owid.csv"] = (
     "https://ourworldindata.org/grapher/gdp-per-capita-worldbank.csv"
     "?v=1&csvType=full&useColumnShortNames=true"
 )
@@ -37,7 +37,7 @@ ARCHIVOS["pib_per_capita_owid.csv"] = (
 BANCO_MUNDIAL_URL = (
     "https://api.worldbank.org/v2/en/indicator/NY.GDP.PCAP.PP.CD?downloadformat=csv"
 )
-BANCO_MUNDIAL_ARCHIVO = "pib_per_capita_ppa_bm.csv"
+BANCO_MUNDIAL_ARCHIVO = "gdp_per_capita_ppp_wb.csv"
 
 
 def descargar(url, destino):

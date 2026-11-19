@@ -5,9 +5,9 @@
 **Institución:** Servicio Nacional de Aprendizaje (SENA)
 **Fecha:** 3 de noviembre de 2026
 **Herramientas:** Python 3.14, pandas 3.1, JupyterLab 4.6
-**Cuaderno de respaldo:** [`notebooks/diagnostico_calidad.ipynb`](../notebooks/diagnostico_calidad.ipynb)
+**Cuaderno de respaldo:** [`notebooks/data_quality.ipynb`](../notebooks/data_quality.ipynb)
 
-Todas las cifras de este informe salen de la ejecución de ese cuaderno. Las tablas completas también están en [`tabla_diagnostico_estructural.csv`](tabla_diagnostico_estructural.csv) y [`tabla_hallazgos.csv`](tabla_hallazgos.csv).
+Todas las cifras de este informe salen de la ejecución de ese cuaderno. Las tablas completas también están en [`data_quality_structure.csv`](data_quality_structure.csv) y [`data_quality_findings.csv`](data_quality_findings.csv).
 
 ---
 
@@ -34,7 +34,7 @@ Todas las cifras de este informe salen de la ejecución de ese cuaderno. Las tab
 | 5 | `pib_owid` | [Our World in Data](https://ourworldindata.org/grapher/gdp-per-capita-worldbank), con datos del Banco Mundial | PIB per cápita PPA en USD internacionales constantes de 2021, una fila por país y año | Contexto económico para comparar salarios entre regiones |
 | 6 | `pib_bm` | [Banco Mundial](https://data.worldbank.org/indicator/NY.GDP.PCAP.PP.CD), `NY.GDP.PCAP.PP.CD` | PIB per cápita PPA en USD internacionales corrientes, una columna por año | Segunda fuente para contrastar |
 
-Las encuestas se descargan del repositorio oficial [StackExchange/Survey](https://github.com/StackExchange/Survey), junto con su diccionario de preguntas (`so_schema_<año>.csv`). Cada encuesta pesa entre 109 y 160 MB, más que el límite de GitHub, así que no se versionan: se obtienen con `scripts/descargar_datos.py`.
+Las encuestas se descargan del repositorio oficial [StackExchange/Survey](https://github.com/StackExchange/Survey), junto con su diccionario de preguntas (`so_schema_<año>.csv`). Cada encuesta pesa entre 109 y 160 MB, más que el límite de GitHub, así que no se versionan: se obtienen con `scripts/download_data.py`.
 
 ## 3. Resultados de la inspección estructural
 
@@ -225,7 +225,7 @@ Entre 28 y 30 países por año no coinciden con los nombres de OWID, y esos paí
 
 ## 6. Acciones de limpieza y preparación propuestas
 
-En orden de aplicación, para un siguiente cuaderno de limpieza (`notebooks/01_limpieza.ipynb`):
+En orden de aplicación, para un siguiente cuaderno de limpieza (`notebooks/data_preparation.ipynb`):
 
 1. **Seleccionar columnas** relevantes de cada encuesta (`ResponseId`, `MainBranch`, `Employment`, `Country`, `Age`, `YearsCodePro`, `WorkExp`, `LanguageHaveWorkedWith`, `WebframeHaveWorkedWith`, `ConvertedCompYearly`) y agregar una columna `anio`.
 2. **Filtrar la población de interés:** desarrolladores profesionales a tiempo completo; en 2025, `Employed`, documentado como aproximación.
